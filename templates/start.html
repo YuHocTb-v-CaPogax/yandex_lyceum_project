@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% if current_user.is_authenticated %}
+        <a href="/news" class="btn btn-secondary" role="button">Добавить новость</a>
+    {% endif %}
+
+    <h1>Новости</h1>
+    {% for news in all_news %}
+    <ul class="list-group">
+        <li class="list-group-item">
+                <h2>{{news.title}}</h2>
+                <div>
+                    {{news.content}}
+                </div>
+                <div>
+                    Автор - {{news.user.name}}, Дата написания - {{news.created_date}}
+                </div>
+                {% if current_user.is_authenticated %}
+                    <div>
+                        <a href="/comment_add/{{ news.id }}" class="btn btn-primary" role="button">Написать комментарии</a>
+                        {% if current_user.is_authenticated and current_user == news.user %}
+                            <a href="/news/{{ news.id }}" class="btn btn-warning" role="button">Изменить</a>
+                            <a href="/news_delete/{{ news.id }}" class="btn btn-danger" role="button">Удалить</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% for comment in comments %}
+                {% for user in users %}
+                    {% if comment.news_id == news.id and comment.user_id == user.id %}
+                    <h2>Комментарии</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                {% set created_by = user %}
+                                <div>
+                                    Дата написания - {{ comment.created_date }}, От - {{ created_by.name }}
+                                </div>
+                                <div>
+                                    {{ comment.content }}
+                                </div>
+                            </li>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </li>
+    </ul>
+    {% endfor %}
+{% endblock %}

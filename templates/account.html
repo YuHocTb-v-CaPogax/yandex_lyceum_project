@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div>Имя аккаунта: {{ current_user.name }}</div>
+    <div>E-mail: {{ current_user.email }}</div>
+    <div>Дата создания: {{ current_user.created_date }}</div>
+    <div>
+        <a href="/account_edit/{{ current_user.id }}" class="btn btn-warning" role="button">Изменить пароль</a>
+        <a href="/account_delete/{{ current_user.id }}" class="btn btn-danger" role="button">Удалить аккаунт</a>
+    </div>
+{% endblock %}
