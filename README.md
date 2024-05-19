@@ -1,3 +1,3 @@
 # Yandex Lyceum project
 
-Self explanatory. A simple website written with Flask framework with ability to register to post and comment.
+A simple website written with Flask framework and SQLAlchemy with ability to register to post and comment.
